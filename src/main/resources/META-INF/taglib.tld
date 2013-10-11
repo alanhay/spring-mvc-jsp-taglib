@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+
+	<description>JSP 2.0 Tag File Library for Spring MVC and Bootstrap
+	</description>
+	<tlib-version>1.0</tlib-version>
+	<short-name>spring-mvc-jsp-taglib</short-name>
+	<uri>http://certait.co.uk/tags/spring-bootstrap</uri>
+	<tag-file>
+		<name>checkbox</name>
+		<path>/META-INF/tags/checkbox.tag</path>
+	</tag-file>
+	<tag-file>
+		<name>date</name>
+		<path>/META-INF/tags/date.tag</path>
+	</tag-file>
+	<tag-file>
+		<name>input</name>
+		<path>/META-INF/tags/input.tag</path>
+	</tag-file>
+	<tag-file>
+		<name>modal</name>
+		<path>/META-INF/tags/modal.tag</path>
+	</tag-file>
+	<tag-file>
+		<name>noFormModal</name>
+		<path>/META-INF/tags/noFormModal.tag</path>
+	</tag-file>
+	<tag-file>
+		<name>radioGroup</name>
+		<path>/META-INF/tags/radioGroup.tag</path>
+	</tag-file>
+	<tag-file>
+		<name>select</name>
+		<path>/META-INF/tags/select.tag</path>
+	</tag-file>
+	<tag-file>
+		<name>textArea</name>
+		<path>/META-INF/tags/textArea.tag</path>
+	</tag-file>
+	<tag-file>
+		<name>time</name>
+		<path>/META-INF/tags/time.tag</path>
+	</tag-file>
+</taglib>
