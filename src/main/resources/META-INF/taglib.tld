@@ -10,12 +10,16 @@
 	<short-name>spring-mvc-jsp-taglib</short-name>
 	<uri>http://certait.co.uk/tags/spring-bootstrap</uri>
 	<tag-file>
-		<name>checkbox</name>
-		<path>/META-INF/tags/checkbox.tag</path>
+		<name>checkBox</name>
+		<path>/META-INF/tags/checkBox.tag</path>
 	</tag-file>
 	<tag-file>
 		<name>date</name>
 		<path>/META-INF/tags/date.tag</path>
+	</tag-file>
+	<tag-file>
+		<name>form</name>
+		<path>/META-INF/tags/form.tag</path>
 	</tag-file>
 	<tag-file>
 		<name>input</name>
