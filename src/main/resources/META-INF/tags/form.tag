@@ -1,5 +1,5 @@
 <%@tag
-	description="Extended input tag to allow for sophisticated errors"
+	description="JSP From Tag scaffolds the generated form in a Bootstrap Panel." display-name="Bootstrap Form Tag" trimDirectiveWhitespaces="true"
 	pageEncoding="UTF-8"%>
 
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -8,7 +8,8 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <%@attribute name="modelAttribute" required="true"
-	type="java.lang.String"%>
+	type="java.lang.String"
+	description="The Spring model attribute to which the fields of this form should be bound."%>
 
 <form:form modelAttribute="${modelAttribute}" role="form"
 	class="form-horizontal">

@@ -51,8 +51,45 @@
 						<encoding>${project.build.sourceEncoding}</encoding>
 					</configuration>
 				</plugin>
+
+
+				<plugin>
+					<groupId>net.sourceforge.maven-taglib</groupId>
+					<artifactId>maven-taglib-plugin</artifactId>
+					<configuration>
+						<taglibs>
+							<taglib>
+								<description>A test tld that contains functions</description>
+								<shortName>test</shortName>
+								<uri>testuri</uri>
+								<outputname>testtaglib</outputname>
+								<!-- <functionClasses> <functionClass>org.apache.commons.lang.StringUtils</functionClass> 
+									</functionClasses> -->
+								<tagdir>src/main/resources/META-INF/tags</tagdir>
+							</taglib>
+						</taglibs>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>taglibdocjar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
 
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>net.sourceforge.maven-taglib</groupId>
+				<artifactId>maven-taglib-plugin</artifactId>
+				<configuration>
+					<taglib.src.dir>src/main/resources/META-INF/tags</taglib.src.dir>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 </project>
