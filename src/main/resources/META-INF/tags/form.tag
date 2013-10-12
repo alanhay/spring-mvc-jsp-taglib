@@ -1,5 +1,6 @@
 <%@tag
-	description="JSP From Tag scaffolds the generated form in a Bootstrap Panel." display-name="Bootstrap Form Tag" trimDirectiveWhitespaces="true"
+	description="JSP From Tag scaffolds the generated form in a Bootstrap Panel."
+	display-name="Bootstrap Form Tag" trimDirectiveWhitespaces="true"
 	pageEncoding="UTF-8"%>
 
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -11,6 +12,10 @@
 	type="java.lang.String"
 	description="The Spring model attribute to which the fields of this form should be bound."%>
 
+<%@attribute name="errorMessagesType" required="true"
+	type="java.lang.String" rtexprvalue="false"
+	description="Indicates how errors associated with controls on this form show be shown. Valid values are tooltip or label. The default is label. Value can be overridden for individual controls."%>
+
 <form:form modelAttribute="${modelAttribute}" role="form"
 	class="form-horizontal">
 	<div class="panel panel-primary">
@@ -18,6 +23,8 @@
 			<h3 class="panel-title">Client Details</h3>
 		</div>
 		<div class="panel-body">
+			<% jspContext.setAttribute("errorMessagesType", errorMessagesType, PageContext.REQUEST_SCOPE); %>
+
 			<jsp:doBody />
 		</div>
 		<div class="panel-footer">

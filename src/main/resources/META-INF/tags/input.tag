@@ -31,26 +31,42 @@
 <%@attribute name="type" required="false" type="java.lang.String"
 	description="The HTML5 type for this control e.g. tel, email etc."%>
 
+<%@attribute name="errorMessageType" required="false"
+	type="java.lang.String"
+	description="Indicates whether errors associated with this field show be shown as errors or standard Labels. If this control is wrapped within a xxx this value can be specified at the 
+		form level and will be inherited by each control. The default is for Labels."%>
+
 <%@attribute name="prependSymbol" required="false"
-	type="java.lang.String" description="The character which should be affixed to the front of the control."%>
-	
+	type="java.lang.String"
+	description="The character which should be affixed to the front of the control."%>
+
 <%@attribute name="appendSymbol" required="false"
-	type="java.lang.String" description="The character which should be affixed to the rear of the control."%>
+	type="java.lang.String"
+	description="The character which should be affixed to the rear of the control."%>
 
 <%@attribute name="autoComplete" required="false"
 	type="java.lang.Boolean"
 	description="Whether this control should have browser autocomplete enabled. The default is false"%>
 
-<%@attribute name="controlColumnClass" required="false"
+<%@attribute name="controlColumnClass" required="false" 
 	type="java.lang.String"
 	description="The number of columns this control should span in Bootstrap's grid system e.g. col-lg-3, col-sm-6. If not specified the default is for columns to expand to fill the available width"%>
 
+<%-- --%>
+<c:if test="${empty errorMessageType}">
+	<c:if test="${not empty errorMessagesType}">
+		<c:set var="errorMessageType" value="${errorMessagesType}"/>
+	</c:if>
+</c:if>
+
 <spring:bind path="${path}">
-	<div class="form-group ${status.error ? 'error' : '' }">
-		<label class="control-label col-lg-2" for="${path}">${label}<c:if
-				test="${required}">
-				<span class="required">*</span>
-			</c:if></label>
+	<div class="form-group ${status.error ? 'text-danger' : '' }">
+
+		<c:if test="${required}">
+			<c:set var="requiredLabel" value="<span class='required'>*</span>" />
+		</c:if>
+
+		<label class="control-label col-lg-2" for="${path}">${label}${requiredLabel}</label>
 
 		<c:if test="${password}">
 			<div class="${controlColumnClass}">
@@ -69,34 +85,56 @@
 					<div class="input-group">
 				</c:if>
 				<c:if test="${not empty prependSymbol}">
-					<span class="input-group-addon">${prependSymbol}</span> 
+					<span class="input-group-addon">${prependSymbol}</span>
 				</c:if>
-				<form:input path="${path}"
+				<form:input path="${path}" id="${path}" data-toggle="tooltip"
+					title="${status.errorMessage}" data-trigger="manual"
+					data-placement="right" data-container="body"
 					autocomplete="${autocomplete == true ? 'on' : 'off'}"
 					cssClass="form-control ${empty cssClass ? 'input-md' : cssClass}"
 					placeHolder="${placeHolder}" type="${type}" />
 				<c:if test="${not empty appendSymbol}">
-					<span class="input-group-addon">${appendSymbol}</span> 
+					<span class="input-group-addon">${appendSymbol}</span>
 				</c:if>
 				<c:if test="${not empty prependSymbol || not empty appendSymbol}">
-					</div>
-				</c:if>
 			</div>
 		</c:if>
+	</div>
+	</c:if>
 
-		<c:if test="${helpText != null}">
-			<div class="col-lg-3">
-				<a href="#" data-trigger="hover" rel="popover"
-					class="btn btn-default btn-sm" style="margin-left:-15px;"
-					data-original-title="<b>${label}</b>" data-content="${helpText}">
-					<span class="glyphicon glyphicon-question-sign"></span>
-				</a>
-			</div>
-		</c:if>
+	<c:if test="${helpText != null}">
+		<span class="col-lg-1"> <a href="#" data-trigger="hover"
+			rel="popover" class="btn btn-default btn-sm"
+			style="margin-left: -15px;" data-original-title="<b>${label}</b>"
+			data-content="${helpText}"> <span
+				class="glyphicon glyphicon-question-sign"></span>
+		</a>
+		</span>
+	</c:if>
 
-		<c:if test="${status.error}">
-			<span class="help-inline">${status.errorMessage}</span>
-		</c:if>
+	<c:if test="${status.error}">
+		<c:choose>
+			<c:when test="${errorMessageType eq'tooltip'}">
+				<script type="text/javascript">
+					$(document).ready(function() {
+						$(function() {
+							$("#${path}").tooltip('show');
+						});
+
+					});
+					$("#${path}").click(function() {
+						$("#${path}").tooltip('hide');
+					});
+					$("#${path}").keydown(function() {
+						$("#${path}").tooltip('hide');
+					});
+				</script>
+			</c:when>
+			<c:otherwise>
+				<label class="control-label text-danger" for="${path}">${status.errorMessage}</label>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
 
 	</div>
 </spring:bind>
