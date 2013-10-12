@@ -49,4 +49,8 @@
 		<name>time</name>
 		<path>/META-INF/tags/time.tag</path>
 	</tag-file>
+	<tag-file>
+		<name>errorOutput</name>
+		<path>/META-INF/tags/errorOutput.tagf</path>
+	</tag-file>
 </taglib>

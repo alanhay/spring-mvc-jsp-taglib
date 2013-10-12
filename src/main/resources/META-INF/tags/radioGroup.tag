@@ -1,53 +1,62 @@
 <%@tag
-	description="Extended input tag to allow for sophisticated errors"
+	description="Generates a Bootstrap styled radio group control with automatic Spring error binding."
 	pageEncoding="UTF-8"%>
 
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@attribute name="path" required="true" type="java.lang.String"%>
-<%@attribute name="cssClass" required="false" type="java.lang.String"%>
-<%@attribute name="labelCssClass" required="false"
-	type="java.lang.String"%>
-<%@attribute name="label" required="false" type="java.lang.String"%>
-<%@attribute name="required" required="false" type="java.lang.Boolean"%>
-<%@attribute name="items" required="true" type="java.lang.Object"%>
-<%@attribute name="itemLabel" required="true" type="java.lang.String"%>
-<%@attribute name="onChange" required="false" type="java.lang.String"%>
-<%@attribute name="disabled" required="false" type="java.lang.Boolean"%>
-<%@attribute name="separateLine" required="false"
-	type="java.lang.Boolean"%>
 
-<c:if test="${empty label}">
-	<c:set var="label"
-		value="${fn:toUpperCase(fn:substring(path, 0, 1))}${fn:toLowerCase(fn:substring(path, 1,fn:length(path)))}" />
-</c:if>
+
+<%@attribute name="path" required="true" type="java.lang.String"
+	description="The attribute of the backing object to which this control should be bound."%>
+
+<%@attribute name="label" required="true" type="java.lang.String"
+	description="The text for the label associated with this control."%>
+
+<%@attribute name="required" required="false" type="java.lang.Boolean"
+	description="Indicates whether this is a required element. If true outputs * next to the label."%>
+
+<%@attribute name="items" required="true" type="java.lang.Object"
+	description="The Collection or Array containing the items for this control."%>
+
+<%@attribute name="itemLabel" required="true" type="java.lang.String"
+	description="The property of the Object in the items Collection which should be used as the label."%>
+
+<%@attribute name="onChange" required="false" type="java.lang.String"
+	description="Javascript function to execute on change event"%>
+
+<%@attribute name="disabled" required="false" type="java.lang.Boolean"
+	description="Indicates whether this control should be rendered with a disabled state."%>
+
+<%@attribute name="separateLine" required="false"
+	type="java.lang.Boolean" description="Indicates whether the radio buttons for this group should be output on a separate line. The default is false."%>
+
 <spring:bind path="${path}">
-	<div class="control-group ${status.error ? 'error' : '' }">
-		<label class="control-label" for="${path}">${label} <c:if
-				test="${required}">
-				<span class="required">*</span>
-			</c:if>
-		</label>
-		
-		<c:if test="${separateLine}">
-			<br />
+	<div class="form-group ${status.error ? 'error' : '' }">
+
+		<c:if test="${required}">
+			<c:set var="requiredLabel" value="<span class='required'>*</span>" />
 		</c:if>
 
-		<div class="controls">
+		<label class="control-label col-lg-2" for="${path}">${label}${requiredLabel}</label>
+
+		<div class="col-lg-2">
+
 			<c:forEach var="item" items="${items}" varStatus="status">
-				<form:radiobutton path="${path}" value="${item}"
-					disabled="${disabled}"
-					cssClass="${empty cssClass ? 'input-xlarge' : cssClass}"
-					onchange="${onChange}" />
+
 				<label for="${path}${status.count}"
-					class="${empty labelCssClass ? 'radio inline' : labelCssClass}"
-					style="margin-left: -20px;">${item[itemLabel]}</label>
-				<span style="margin-left: 10px;">&nbsp;</span>
+					class="${empty labelCssClass ? 'radio-inline' : labelCssClass}">
+
+					<form:radiobutton path="${path}" value="${item}"
+						disabled="${disabled}" onchange="${onChange}" />
+
+					${item[itemLabel]}
+
+				</label>
 
 				<c:if test="${separateLine}">
-					<br /><br/>
+					<br />
 				</c:if>
 			</c:forEach>
 

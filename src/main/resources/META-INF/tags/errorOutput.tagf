@@ -1,0 +1,29 @@
+<%@tag description="Only used internally by other tags."
+	pageEncoding="UTF-8"%>
+
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@attribute name="errorMessageType" required="true" type="java.lang.Boolean"%>
+<%@attribute name="errorMessage" required="true" type="java.lang.String"%>
+<%@attribute name="path" required="true" type="java.lang.String"%>
+
+<c:choose>
+	<c:when test="${errorMessageType eq'tooltip'}">
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$(function() {
+					$("#${path}").tooltip('show');
+				});
+
+			});
+			$("#${path}").click(function() {
+				$("#${path}").tooltip('hide');
+			});
+			$("#${path}").keydown(function() {
+				$("#${path}").tooltip('hide');
+			});
+		</script>
+	</c:when>
+	<c:otherwise>
+		<label class="control-label text-danger" for="${path}">${status.errorMessage}</label>
+	</c:otherwise>
+</c:choose>
